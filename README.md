@@ -1,7 +1,7 @@
 # java-retry-demo-collect
 java 重试demo 合集
 ### async-retry
-基于github上的简单demo
+基于github上async-retry项目的简单demo
 ### retry-spring
 spring retry的注解的简单demo
 ### thread-pool-retry
