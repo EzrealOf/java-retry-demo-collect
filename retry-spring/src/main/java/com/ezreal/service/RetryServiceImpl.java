@@ -21,6 +21,6 @@ public class RetryServiceImpl {
 
     @Recover
     public void upload(Exception e, FileModel fileModel){
-        log.error("重试多次后, 文件上传失败");
+        log.error("文件名称: {}, 地址: {}, 上传失败， 错误原因",fileModel.getFileName(), fileModel.getFileUrl(), e);
     }
 }

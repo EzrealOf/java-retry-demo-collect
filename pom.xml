@@ -13,6 +13,7 @@
         <module>async-retry</module>
         <module>retry-common</module>
         <module>thread-pool-retry</module>
+        <module>guava-retrying</module>
     </modules>
 
     <parent>
