@@ -24,16 +24,20 @@ public class RetryServiceImpl {
 
     private static final Integer MAX_RETRY_TIMES = 2;
 
+    /**
+     * 重试
+     * @param fileModelList 需要重试的队列
+     */
     public void retry(List<FileModel> fileModelList) {
         fileModelList.forEach(fileModel -> {
             RetryModel<FileModel> retryModel = new RetryModel<>();
             retryModel.init(fileModel);
-            Callable<Runnable> callable = getCallable(retryModel);
+            Callable callable = getCallable(retryModel);
             if (Objects.nonNull(callable)) {
-                CompletableFuture<Runnable> future = executor.getWithRetry(callable);
+                CompletableFuture future = executor.getWithRetry(callable);
 
                 future.thenAccept(reslut->{
-                    log.info(reslut.toString());
+                    log.info("获取返回值"+reslut.toString());
                 });
             }
 
@@ -42,17 +46,25 @@ public class RetryServiceImpl {
 
     }
 
+    /**
+     *
+     * @param retryModel 重试模型
+     */
     public Callable getCallable(RetryModel<FileModel> retryModel){
-        if (Objects.isNull(retryModel) || retryModel.getRetryTimes() > MAX_RETRY_TIMES){
-            return null;
-        }
         return () -> {
+            log.info("开始第{}次上传文件，文件名称:{}以及文件路径为{}",retryModel.getRetryTimes(), retryModel.getT().getFileName(), retryModel.getT().getFileUrl());
+            retryModel.retryTimesPlus();
             upload(retryModel);
             return retryModel;
         };
     }
 
+    /**
+     * 更新文件
+     * @param retryModel 重试模型
+     */
     private void upload(RetryModel retryModel){
-
+        log.info("上传文件, 文件为:{}", retryModel.getT());
+        throw new NullPointerException("null pointer exception");
     }
 }
