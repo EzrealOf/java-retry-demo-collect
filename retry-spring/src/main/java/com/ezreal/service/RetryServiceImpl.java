@@ -7,6 +7,8 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @author ezeal
  */
@@ -14,13 +16,17 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RetryServiceImpl {
 
-    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 10000, multiplier = 2, maxDelay = 20000))
-    public void upload(FileModel fileModel){
+    @Resource
+    private FileServiceImpl fileService;
 
+
+    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 10000, multiplier = 2, maxDelay = 20000))
+    public void retry(FileModel fileModel){
+        fileService.upload(fileModel);
     }
 
     @Recover
-    public void upload(Exception e, FileModel fileModel){
-        log.error("文件名称: {}, 地址: {}, 上传失败， 错误原因",fileModel.getFileName(), fileModel.getFileUrl(), e);
+    public void retry(Exception e, FileModel fileModel){
+        log.error("文件名称: {}, 地址: {}, 上传失败, 错误原因", fileModel.getFileName(), fileModel.getFileUrl(), e);
     }
 }
