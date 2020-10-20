@@ -15,14 +15,14 @@
         <module>thread-pool-retry</module>
         <module>guava-retry</module>
         <module>dynamic-proxy-retry</module>
-        <module>CGLIB-proxy-retry</module>
+        <module>cglib-proxy-retry</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <dependencies>

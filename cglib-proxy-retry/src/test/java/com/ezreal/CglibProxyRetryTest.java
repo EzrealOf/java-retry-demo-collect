@@ -16,7 +16,6 @@ public class CglibProxyRetryTest {
     public void fileUploadTest() {
         //give
         FileServiceImpl proxy = (FileServiceImpl) new CglibProxy().getProxy(FileServiceImpl.class);
-
         //when
         //then
         assertThatThrownBy(()->proxy.upload(new FileModel("name", "url"))).isInstanceOf(RuntimeException.class);
