@@ -15,6 +15,7 @@
         <module>thread-pool-retry</module>
         <module>guava-retry</module>
         <module>dynamic-proxy-retry</module>
+        <module>CGLIB-proxy-retry</module>
     </modules>
 
     <parent>
