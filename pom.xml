@@ -16,6 +16,7 @@
         <module>guava-retry</module>
         <module>dynamic-proxy-retry</module>
         <module>cglib-proxy-retry</module>
+        <module>aop-retry</module>
     </modules>
 
     <parent>
