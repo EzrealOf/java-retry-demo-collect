@@ -33,11 +33,7 @@ public class RetryThreadServiceImpl {
         fileModelList.forEach(fileModel -> {
             RetryModel<FileModel> retryModel = new RetryModel<>();
             retryModel.init(fileModel);
-            ThreadPoolExecutor pool = factory.getThreadPool(FILE_POOL);
-            Runnable runnable = getRunnable(retryModel);
-            if (Objects.nonNull(runnable)){
-                pool.submit(runnable);
-            }
+            retry(retryModel);
         });
 
     }
@@ -57,15 +53,22 @@ public class RetryThreadServiceImpl {
             try {
                 upload(retryModel.getT());
             }catch (Exception e){
-                ThreadPoolExecutor pool = factory.getThreadPool(FILE_POOL);
-                Runnable runnable = getRunnable(retryModel);
-                if (Objects.nonNull(runnable)){
-                    pool.submit(runnable);
-                }
+                retry(retryModel);
             }
         };
     }
 
+    /**
+     *
+     * @param retryModel 重试模型
+     */
+    private void retry(RetryModel<FileModel> retryModel){
+        ThreadPoolExecutor pool = factory.getThreadPool(FILE_POOL);
+        Runnable runnable = getRunnable(retryModel);
+        if (Objects.nonNull(runnable)){
+            pool.submit(runnable);
+        }
+    }
 
     /**
      * 业务逻辑 上传图片
